@@ -1,6 +1,8 @@
-import { getSession, signOut, useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import AppLayout from "@/components/app/layout";
+import { User } from "next-auth";
 
 export default function App() {
     const router = useRouter();
@@ -10,11 +12,11 @@ export default function App() {
             router.push("/")
         }
     })
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<User | undefined>(undefined)
 
     useEffect(() => {
         async function getUser() {
-            setUser(user)
+            setUser(session?.user)
         }
         if (user === null) {
             getUser()
@@ -24,10 +26,10 @@ export default function App() {
     return (
         <div className="container">
             <main>
-                <h1 className="title">
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
-                    <button onClick={() => signOut()}>Çıkış yap</button>
+                <h1 className="text-3xl font-bold underline">
+                    Hello, Next.js!
                 </h1>
+                <button onClick={() => signOut()}>Çıkış yap</button>
                 <pre>
                     {JSON.stringify(session, null, 2)}
                 </pre>
@@ -35,3 +37,4 @@ export default function App() {
         </div>
     )
 }
+App.Layout = AppLayout;

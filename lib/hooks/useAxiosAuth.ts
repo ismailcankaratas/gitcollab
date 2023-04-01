@@ -8,7 +8,7 @@ const useAxiosAuth = () => {
     useEffect(() => {
         const requestInterceptor = axiosAuth.interceptors.request.use((config: any) => {
             if(!config.headers.Authorization) {
-                config.headers['Authorization'] = `Bearer ${session?.user.accessToken}`;
+                config.headers['Authorization'] = `Bearer ${session?.user?.github_access_token}`;
             }
             return config;
         });

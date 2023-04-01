@@ -6,9 +6,13 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
+  const Noop: React.FC = ({ children }: any) => <>{children}</>;
+  const Layout = (Component as any).Layout || Noop;
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <Layout>
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </Layout>
   )
 }

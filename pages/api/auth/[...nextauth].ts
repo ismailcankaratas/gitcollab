@@ -6,14 +6,14 @@ export const authOptions: AuthOptions = {
     session: { strategy: 'jwt' },
     callbacks: {
         async jwt({ token, user }) {
-          /* Step 1: update the token based on the user object */
-          if (user) {
-            Object.assign(token, user);
-          }
-          return token;
+            if (user) {
+                Object.assign(token, user);
+            }
+            return token;
         },
         session({ session, token }) {
             Object.assign(session, token);
+            delete session.user;
             return session;
         },
     },
@@ -28,6 +28,7 @@ export const authOptions: AuthOptions = {
                 const code = credentials?.code as string;
                 const access_token = await getAccessToken(code);
                 const user = await getGithubUser(access_token);
+                user.github_access_token = access_token;
                 if (user) {
                     return user;
                 }
