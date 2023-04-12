@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials"
-import NextAuth, { AuthOptions } from "next-auth"
+import NextAuth, { AuthOptions, User } from "next-auth"
 import { getAccessToken, getGithubUser } from "@/lib/auth";
+import axios from "axios";
 
 export const authOptions: AuthOptions = {
     session: { strategy: 'jwt' },
@@ -11,9 +12,8 @@ export const authOptions: AuthOptions = {
             }
             return token;
         },
-        session({ session, token }) {
-            Object.assign(session, token);
-            delete session.user;
+        async session({ session, token }) {
+            Object.assign(session.user as User, token);
             return session;
         },
     },

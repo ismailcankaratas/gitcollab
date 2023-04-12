@@ -1,10 +1,13 @@
 import { AppProps } from "next/app";
+import Sidebar from "./Sidebar/Sidebar";
 
 export default function AppLayout({ children }: AppProps & { children: any }) {
     return (
-        <div>
-            <h1>App Layout</h1>
-            {children}
+        <div className="flex w-full h-[100vh] overflow-hidden">
+            <Sidebar />
+            <main className="w-full lg:ml-[300px] bg-white rounded-2xl m-4 p-4 text-black overflow-y-auto">
+                {children}
+            </main>
         </div>
     )
 }

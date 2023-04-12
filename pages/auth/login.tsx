@@ -4,7 +4,7 @@ import { getCsrfToken } from "next-auth/react"
 import { useRouter } from "next/router";
 import { useEffect } from "react"
 
-export default function ({ csrfToken, code }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Login({ csrfToken, code }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter();
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function ({ csrfToken, code }: InferGetServerSidePropsType<typeof
             }
         }
         fetchUser()
-    }, [code])
+    }, [csrfToken, code])
     return (
         <div>
 

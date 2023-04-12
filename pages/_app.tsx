@@ -1,6 +1,12 @@
+import React from 'react'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from "next-auth/react"
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 export default function App({
   Component,
@@ -8,11 +14,17 @@ export default function App({
 }: AppProps) {
   const Noop: React.FC = ({ children }: any) => <>{children}</>;
   const Layout = (Component as any).Layout || Noop;
+  const [queryClient] = React.useState(() => new QueryClient())
+
   return (
-    <Layout>
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
-    </Layout>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Hydrate>
+      </QueryClientProvider>
+    </SessionProvider>
   )
 }

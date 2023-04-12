@@ -1,7 +1,8 @@
-import useAxiosAuth from '@/lib/hooks/useAxiosAuth'
 import Head from 'next/head'
 
-export default function Home() {
+export default function Home({ clientId }: {
+  clientId: string
+}) {
   return (
     <>
       <Head>
@@ -12,12 +13,20 @@ export default function Home() {
       </Head>
       <div>
         <p>
-          Üzerinde çalıştığınız depolar hakkında Github'a katkıda bulunanlarla kolayca sohbet edin!
+          Üzerinde çalıştığınız depolar hakkında Github&apos;a katkıda bulunanlarla kolayca sohbet edin!
         </p>
-        <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`}>
+        <a href={`https://github.com/login/oauth/authorize?client_id=${clientId}`}>
           Github Login
         </a>
       </div>
     </>
   )
 }
+
+export const getStaticProps = async () => {
+  return {
+    props: {
+      clientId: process.env.GITHUB_CLIENT_ID,
+    },
+  };
+};
