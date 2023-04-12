@@ -1,8 +1,15 @@
+import { db } from '@/lib/db';
 import Head from 'next/head'
+import { useEffect } from "react";
 
-export default function Home({ clientId }: {
-  clientId: string
-}) {
+export default function Home() {
+  useEffect(() => {
+    async function deneme() {
+      await db.set("hello", "hello");
+    }
+    deneme();
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,18 +22,10 @@ export default function Home({ clientId }: {
         <p>
           Üzerinde çalıştığınız depolar hakkında Github&apos;a katkıda bulunanlarla kolayca sohbet edin!
         </p>
-        <a href={`https://github.com/login/oauth/authorize?client_id=${clientId}`}>
+        <a href={`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`}>
           Github Login
         </a>
       </div>
     </>
   )
 }
-
-export const getStaticProps = async () => {
-  return {
-    props: {
-      clientId: process.env.GITHUB_CLIENT_ID,
-    },
-  };
-};
