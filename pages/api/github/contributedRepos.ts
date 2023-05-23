@@ -33,6 +33,9 @@ const handler = async (req: NextApiRequest, res: IResponse) => {
             }
         })
         if (contributors.data.length > 1) {
+            Object.assign(element, {
+                contributors: contributors.data
+            });
             repos.push(element);
         }
     }

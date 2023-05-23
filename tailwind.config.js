@@ -20,6 +20,7 @@ module.exports = {
       },
       fontFamily: {
         'open-sans': ['"Open Sans"', 'sans-serif'],
+        'poppins': ['"Poppins"', 'sans-serif'],
       }
     },
   },

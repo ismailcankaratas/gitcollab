@@ -7,6 +7,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import TimeAgo from 'javascript-time-ago'
+
+import en from 'javascript-time-ago/locale/en.json'
+import tr from 'javascript-time-ago/locale/tr.json'
+
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(tr)
 
 export default function App({
   Component,

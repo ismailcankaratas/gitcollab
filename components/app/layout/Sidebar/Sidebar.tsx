@@ -43,13 +43,13 @@ export default function Sidebar() {
     return (
         <>
             <span
-                className="absolute text-white text-4xl top-5 left-4 cursor-pointer"
+                className="absolute text-white text-4xl top-5 left-4 cursor-pointer z-50"
                 onClick={() => openSidebar()}
             >
                 <i className="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
             </span>
             <div
-                className={`${active ? 'hidden' : ''} pr-4 fixed flex flex-col top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gc-primary`}
+                className={`${active ? 'hidden' : ''} z-50 pr-4 fixed flex flex-col top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gc-primary`}
             >
                 <div className="text-gray-100 text-xl">
                     <div className="p-2.5 mt-1 flex items-center">

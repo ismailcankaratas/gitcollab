@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import NextAuth, { AuthOptions, User } from "next-auth"
 import { getAccessToken, getGithubUser } from "@/lib/auth";
-import axios from "axios";
+import { db } from "@/lib/db";
 
 export const authOptions: AuthOptions = {
     session: { strategy: 'jwt' },
@@ -24,13 +24,17 @@ export const authOptions: AuthOptions = {
                 code: { type: "text" },
             },
             async authorize(credentials, req) {
-                // (i.e., the request IP address)
                 const code = credentials?.code as string;
                 const access_token = await getAccessToken(code);
                 const user = await getGithubUser(access_token);
                 user.github_access_token = access_token;
                 if (user) {
-                    return user;
+                    const dbUser = await db.get(`user:id:${user.id}`);
+                    if(!dbUser) {
+                        await db.set(`user:id:${user.id}`, user);
+                        return user;
+                    }
+                    return dbUser;
                 }
                 throw new Error('Invalid github account');
             }

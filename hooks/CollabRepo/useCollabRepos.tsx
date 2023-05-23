@@ -10,7 +10,7 @@ const useCollabRepos = () => {
 }
 
 const useCollabFindRepo = (repoUsername: any, repoName: any) => {
-    const [data, setData] = useState({});
+    const [data, setData]: any = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
     const repos = useCollabRepos();
